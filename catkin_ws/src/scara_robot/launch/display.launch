@@ -1,0 +1,15 @@
+<launch>
+  <!-- Cargar el modelo del robot desde xacro -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find scara_robot)/urdf/scara.xacro'" />
+  
+  <param name="robot_description_semantic" textfile="$(find scara_config_sim)/config/scara_robot.srdf" />
+
+  <!-- Publicador de estados de las articulaciones (con GUI interactiva) -->
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+
+  <!-- Publicador de la transformación del modelo -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!-- RViz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find scara_robot)/rviz/scara_config.rviz" required="true"/>
+</launch>

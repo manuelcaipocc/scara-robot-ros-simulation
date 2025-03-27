@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: scara_robot
+    relative_path: urdf/scara.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/scara_robot.srdf
+  CONFIG:
+    author_name: Manuel_Caipo
+    author_email: manuecaipocc@outlook.com
+    generated_timestamp: 1743113958

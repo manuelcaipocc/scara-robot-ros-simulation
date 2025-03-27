@@ -1,0 +1,32 @@
+# Ignorar carpetas de build y desarrollo generadas por catkin
+build/
+devel/
+
+# Ignorar archivos temporales y de sistema
+*.swp
+*.bak
+*.pyc
+*.pyo
+*.log
+
+# Archivos de configuración específicos de usuario o IDE
+.vscode/
+.idea/
+
+# Archivos de ROS que no necesitas versionar
+*.launch~  # archivos temporales de launch
+*.yaml~    # backups automáticos
+
+# OneDrive y otros sistemas de sincronización
+.DS_Store
+Thumbs.db
+*.sync
+*.tmp
+
+# Archivos de entorno virtual o Python si los usas
+venv/
+.env/
+__pycache__/
+
+# Ignorar Graphviz generado
+*.gv
