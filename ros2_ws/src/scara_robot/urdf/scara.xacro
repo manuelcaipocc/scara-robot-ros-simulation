@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="scara_robot">
+
+  <!-- Parámetros actualizados -->
+  <xacro:property name="H0" value="0.2"/>
+  <xacro:property name="L0" value="0.8"/>
+  <xacro:property name="L1" value="0.4"/>
+  <xacro:property name="Z1" value="0.11"/>
+  <xacro:property name="L2" value="0.5"/>
+  <xacro:property name="Z2" value="0.45"/>
+  <xacro:property name="H3_max" value="0.2"/>
+  <xacro:property name="H3_fixed" value="0.2"/>
+  <xacro:property name="L4" value="0.2"/>
+  <xacro:property name="L5" value="1"/>
+  <xacro:property name="L6" value="0.35"/>
+  <xacro:property name="link_radius1" value="0.15"/>
+  <xacro:property name="link_radius2" value="0.075"/>
+  <xacro:property name="link_radius3" value="0.04"/>
+  <xacro:property name="link_radius4" value="0.070"/>
+  <xacro:property name="link_radius5" value="0.1"/>
+
+  <!-- Materiales -->
+  <material name="orange"><color rgba="1.0 0.5 0.0 1"/></material>
+  <material name="purple"><color rgba="0.6 0.2 0.8 1"/></material>
+  <material name="yellow"><color rgba="1.0 1.0 0.0 1"/></material>
+  <material name="gray"><color rgba="0.6 0.6 0.6 1"/></material>
+  <material name="red"><color rgba="1 0 0 1"/></material>
+  <material name="green"><color rgba="0 1 0 1"/></material>
+  <material name="blue"><color rgba="0 0 1 1"/></material>
+  <material name="celeste"><color rgba="0.53 0.81 0.98 1"/></material>
+
+  <!-- Macro para ejes visuales reducidos -->
+  <xacro:macro name="axis_marker" params="xyz">
+    <visual><origin xyz="${xyz}" rpy="0 0 0"/><geometry><box size="0.02 0.0005 0.0005"/></geometry><material name="red"/></visual>
+    <visual><origin xyz="${xyz}" rpy="0 0 1.5708"/><geometry><box size="0.02 0.0005 0.0005"/></geometry><material name="green"/></visual>
+    <visual><origin xyz="${xyz}" rpy="0 -1.5708 0"/><geometry><box size="0.02 0.0005 0.0005"/></geometry><material name="blue"/></visual>
+  </xacro:macro>
+
+  <!-- Link base mundial -->
+  <link name="world">
+    <visual>
+      <geometry>
+        <box size="2.5 2.5 0.01"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="2.5 2.5 0.01"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="gray"/>
+    </collision>
+  </link>
+
+  <!-- Joint desde el mundo al pedestal -->
+  <joint name="world_to_pedestal" type="fixed">
+    <parent link="world"/>
+    <child link="pedestal"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+
+  <!-- Pedestal fijo -->
+  <link name="pedestal">
+    <visual>
+      <geometry><cylinder length="${H0}" radius="${link_radius1}"/></geometry>
+      <origin xyz="0 0 ${H0/2}" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+
+    <collision>
+      <geometry><cylinder length="${H0}" radius="${link_radius1}"/></geometry>
+      <origin xyz="0 0 ${H0/2}" rpy="0 0 0"/>
+      <material name="gray"/>
+    </collision>
+  </link>
+
+  <!-- Columna vertical giratoria (celeste) -->
+  <link name="base_link">
+    <visual>
+      <geometry><cylinder length="${L0}" radius="${link_radius5}"/></geometry>
+      <origin xyz="0 0 ${L6}" rpy="0 0 0"/>
+      <material name="celeste"/>
+    </visual>
+    <xacro:axis_marker xyz="0 0 ${L0/2}"/>
+
+    <collision>
+      <geometry><cylinder length="${L0}" radius="${link_radius5}"/></geometry>
+      <origin xyz="0 0 ${L6}" rpy="0 0 0"/>
+      <material name="celeste"/>
+    </collision>
+  </link>
+
+
+  <joint name="joint_0" type="revolute">
+    <parent link="pedestal"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${H0}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>  <!-- ← Eje de rotación deseado: Y -->
+    <limit effort="1" velocity="1.0" lower="-2.61799" upper="2.61799"/>
+  </joint>
+
+  <!-- Primer brazo horizontal naranja -->
+  <link name="link_1">
+    <visual>
+      <geometry><cylinder length="${L1}" radius="${link_radius3}"/></geometry>
+      <origin xyz="${L1/2} 0 0" rpy="0 1.5708 0"/>  <!--  Cilindro apuntando en Z -->
+      <material name="orange"/>
+    </visual>
+    <xacro:axis_marker xyz="0 0 ${L1/2}"/>
+    <collision>
+      <geometry><cylinder length="${L1}" radius="${link_radius3}"/></geometry>
+      <origin xyz="${L1/2} 0 0" rpy="0 1.5708 0"/>
+      <material name="orange"/>
+    </collision>
+    
+  </link>
+
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 ${L0}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>  <!-- ← Eje de rotación deseado: Y -->
+    <limit effort="1" velocity="1.0" lower="-1.5708" upper="0"/>
+  </joint>
+
+  <!-- Parte vertical de la L naranja (Z1 arriba) -->
+  <link name="link_1_vertical">
+    <visual>
+      <geometry><cylinder length="${Z1}" radius="${link_radius3}"/></geometry>
+      <origin xyz="0 0 ${Z1/2}" rpy="0 0 0"/>
+      <material name="orange"/>
+    </visual>
+    <xacro:axis_marker xyz="0 0 ${Z1/2}"/>
+    <collision>
+      <geometry><cylinder length="${Z1}" radius="${link_radius3}"/></geometry>
+      <origin xyz="0 0 ${Z1/2}" rpy="0 0 0"/>
+      <material name="orange"/>
+    </collision>
+  </link>
+
+  <joint name="joint_2" type="fixed">
+    <parent link="link_1"/>
+    <child link="link_1_vertical"/>
+    <origin xyz="${L1} 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Parte horizontal de la L morada -->
+  <link name="link_2">
+    <visual>
+      <geometry><cylinder length="${L2}" radius="${link_radius3}"/></geometry>
+      <origin xyz="${L2/2} 0 0" rpy="0 1.5708 0"/>
+      <material name="purple"/>
+    </visual>
+    <xacro:axis_marker xyz="${L2/2} 0 0"/>
+    <collision>
+      <geometry><cylinder length="${L2}" radius="${link_radius3}"/></geometry>
+      <origin xyz="${L2/2} 0 0" rpy="0 1.5708 0"/>
+      <material name="purple"/>
+    </collision>
+  </link>
+
+  <joint name="joint_3" type="revolute">
+    <parent link="link_1_vertical"/>
+    <child link="link_2"/>
+    <origin xyz="0 0 ${Z1}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1" velocity="1.0" lower="-2.96706" upper="2.96706"/>
+  </joint>
+
+  <!-- Parte vertical de la L morada -->
+  <link name="link_2_down">
+    <visual>
+      <geometry><cylinder length="${Z2}" radius="${link_radius3}"/></geometry>
+      <origin xyz="0 0 ${-Z2/2}" rpy="0 0 0"/>
+      <material name="purple"/>
+    </visual>
+    <xacro:axis_marker xyz="0 0 ${-Z2/2}"/>
+    <collision>
+      <geometry><cylinder length="${Z2}" radius="${link_radius3}"/></geometry>
+      <origin xyz="0 0 ${-Z2/2}" rpy="0 0 0"/>
+      <material name="purple"/>
+    </collision>
+  </link>
+
+  <joint name="joint_4" type="fixed">
+    <parent link="link_2"/>
+    <child link="link_2_down"/>
+    <origin xyz="${L2} 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Eje prismático con parte fija de 0.2 m -->
+  <link name="link_3">
+    <visual>
+      <geometry><cylinder radius="${link_radius3}" length="${H3_fixed}"/></geometry>
+      <origin xyz="0 0 ${-H3_fixed/2}" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+    <xacro:axis_marker xyz="0 0 ${-H3_fixed/2}"/>
+    <collision>
+      <geometry><cylinder radius="${link_radius3}" length="${H3_fixed}"/></geometry>
+      <origin xyz="0 0 ${-H3_fixed/2}" rpy="0 0 0"/>
+      <material name="gray"/>
+    </collision>
+  </link>
+
+  <joint name="joint_5" type="prismatic">
+    <parent link="link_2_down"/>
+    <child link="link_3"/>
+    <origin xyz="0 0 ${-Z2}" rpy="0 0 0"/>
+    <axis xyz="0 0 -1"/>
+    <limit effort="1" velocity="0.5" lower="-0.1" upper="${H3_max}"/>
+  </joint>
+
+  <link name="link_4">
+    <visual>
+      <geometry><cylinder radius="${link_radius4}" length="${L4}"/></geometry>
+      <origin xyz="0 0 ${-L4/2}" rpy="0 0 0"/>
+      <material name="gray"/>
+    </visual>
+    <xacro:axis_marker xyz="0 0 ${-L4/2}"/>
+    <collision>
+      <geometry><cylinder radius="${link_radius4}" length="${L4}"/></geometry>
+      <origin xyz="0 0 ${-L4/2}" rpy="0 0 0"/>
+      <material name="gray"/>
+    </collision>
+  </link>
+
+  <joint name="joint_6" type="revolute">
+    <parent link="link_3"/>
+    <child link="link_4"/>
+    <origin xyz="0 0 ${-H3_fixed}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1" velocity="1.0" lower="-3.14" upper="3.14"/>
+  </joint>
+
+  <link name="tcp">
+    <visual>
+      <geometry><sphere radius="0.04"/></geometry>
+      <material name="gray"/>
+    </visual>
+    <xacro:axis_marker xyz="0 0 0"/>
+    <collision>
+      <geometry><sphere radius="0.04"/></geometry>
+      <material name="gray"/>
+    </collision>
+  </link>
+
+  <joint name="joint_tcp" type="fixed">
+    <parent link="link_4"/>
+    <child link="tcp"/>
+    <origin xyz="0 0 ${-L4}" rpy="0 0 0"/>
+  </joint>
+
+</robot>

@@ -9,6 +9,11 @@ devel/
 *.pyo
 *.log
 
+# Ignorar carpetas de compilación
+build/
+install/
+log/
+
 # Archivos de configuración específicos de usuario o IDE
 .vscode/
 .idea/

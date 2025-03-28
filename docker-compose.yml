@@ -5,26 +5,25 @@ services:
       dockerfile: Dockerfile
     container_name: ros2_scara_dev
     environment:
-      # - DISPLAY=host.docker.internal:0.0
       - DISPLAY=${DISPLAY}
       - WAYLAND_DISPLAY=${WAYLAND_DISPLAY}
       - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
-      - LIBGL_ALWAYS_SOFTWARE=1
       - QT_X11_NO_MITSHM=1
+      - LIBGL_ALWAYS_SOFTWARE=1
     volumes:
-      - ./catkin_ws:/catkin_ws
-      - /tmp/.X11-unix:/tmp/.X11-unix # nueva
-      - ${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR} # nueva
-    working_dir: /catkin_ws
+      - ./ros2_ws:/ros2_ws
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ${XDG_RUNTIME_DIR}:${XDG_RUNTIME_DIR}
+    working_dir: /ros2_ws
     stdin_open: true
     tty: true
     devices:
       - /dev/dri
-    ports:
-      -  "11311:11311" # ROS2
     networks:
       rosnet:
-        ipv4_address: 172.21.176.18  # ← IP fija asignada aquí
+        ipv4_address: 172.21.176.18
+    ports:
+      - "11311:11311" # solo si lo necesitas, ROS 2 usa DDS
 networks:
   rosnet:
     driver: bridge
