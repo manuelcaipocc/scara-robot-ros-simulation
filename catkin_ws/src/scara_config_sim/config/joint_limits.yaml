@@ -34,7 +34,7 @@ joint_limits:
 
   joint_5:
     has_position_limits: true
-    min_position: -0.1
+    min_position: 0 
     max_position: 0.2
     has_velocity_limits: true
     max_velocity: 0.5
