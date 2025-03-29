@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: scara_robot
+    relative_path: urdf/scara.xacro
+  srdf:
+    relative_path: config/scara_robot.srdf
+  package_settings:
+    author_name: Manuel Caipo
+    author_email: manuelcaipocc@outlook.com
+    generated_timestamp: 1743209684
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

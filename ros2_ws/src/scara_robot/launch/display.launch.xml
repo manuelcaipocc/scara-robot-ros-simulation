@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Ejecutar robot_state_publisher -->
+  <node pkg="robot_state_publisher" exec="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <param name="robot_description" command="xacro $(find-pkg-share scara_robot)/urdf/scara.xacro" />
+  </node>
+
+  <!-- Ejecutar joint_state_publisher_gui -->
+  <node pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" name="joint_state_publisher_gui" output="screen" />
+
+  <!-- Ejecutar rviz2 -->
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen"
+        args="-d $(find-pkg-share scara_robot)/rviz/scara.rviz" />
+
+</launch>
+

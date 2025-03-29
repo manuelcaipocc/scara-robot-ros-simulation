@@ -20,10 +20,18 @@ RUN apt update && apt install -y \
     ros-humble-moveit-setup-assistant \
     ros-humble-xacro \
     ros-humble-joint-state-publisher-gui \
+    ros-humble-joint-state-publisher-gui \
+    ros-humble-launch \
+    ros-humble-launch-ros \
     && rm -rf /var/lib/apt/lists/*
+    
+RUN apt update && apt install -y \
+    ros-humble-launch-testing-ament-cmake
 
 # Instalar colcon
 RUN apt update && apt install -y python3-colcon-common-extensions
+# GUI interactiva de MoveIt
+RUN apt install -y ros-humble-moveit-visual-tools
 
 # Instalar puente ROS <-> Gazebo (ros_gz)
 RUN apt install -y \

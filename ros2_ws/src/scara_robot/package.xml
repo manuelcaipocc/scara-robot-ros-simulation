@@ -1,13 +1,29 @@
+<?xml version="1.0"?>
 <package format="3">
   <name>scara_robot</name>
-  <version>0.0.1</version>
-  <description>SCARA robot URDF for ROS 2</description>
-
-  <maintainer email="manuel@example.com">Manuel</maintainer>
+  <version>0.0.0</version>
+  <description>SCARA Robot visualization and state publishing</description>
+  <maintainer email="root@todo.todo">root</maintainer>
   <license>MIT</license>
 
+  <!-- Build dependencies -->
   <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Runtime dependencies -->
+  <depend>rclpy</depend>
+  <depend>urdf</depend>
+  <exec_depend>xacro</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>joint_state_publisher_gui</exec_depend>
-  <exec_depend>xacro</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+
+  <!-- Test dependencies -->
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+
 </package>
