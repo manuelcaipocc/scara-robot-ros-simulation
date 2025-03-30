@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>scara_robot_movelt</name>
+  <name>scara_robot_movelt2</name>
   <version>0.3.0</version>
   <description>
      An automatically generated package with all the configuration and launch files for using the scara_robot with the MoveIt Motion Planning Framework
   </description>
-  <maintainer email="manuelcaipocc@outlook.com">Manuel Caipo</maintainer>
+  <maintainer email="manuelcaipocc@outlook.com">Manuel caipo</maintainer>
 
   <license>BSD</license>
 
@@ -14,7 +14,7 @@
   <url type="bugtracker">https://github.com/ros-planning/moveit2/issues</url>
   <url type="repository">https://github.com/ros-planning/moveit2</url>
 
-  <author email="manuelcaipocc@outlook.com">Manuel Caipo</author>
+  <author email="manuelcaipocc@outlook.com">Manuel caipo</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

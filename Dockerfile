@@ -23,6 +23,10 @@ RUN apt update && apt install -y \
     ros-humble-joint-state-publisher-gui \
     ros-humble-launch \
     ros-humble-launch-ros \
+    ros-humble-ros2-control \
+    ros-humble-ros2-controllers \
+    ros-humble-controller-manager \
+    # ros-humble-trac-ik-kinematics-plugin \
     && rm -rf /var/lib/apt/lists/*
     
 RUN apt update && apt install -y \

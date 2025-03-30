@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(scara_robot_movelt)
+project(scara_robot_movelt2)
 
 find_package(ament_cmake REQUIRED)
 

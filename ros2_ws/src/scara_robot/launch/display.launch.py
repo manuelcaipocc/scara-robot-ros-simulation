@@ -14,7 +14,7 @@ def generate_launch_description():
     # Encuentra el archivo .xacro
     scara_pkg_path = get_package_share_directory('scara_robot')
     xacro_file = os.path.join(scara_pkg_path, 'urdf', 'scara.xacro')
-    moveit_pkg_path = get_package_share_directory('scara_robot_movelt')
+    moveit_pkg_path = get_package_share_directory('scara_robot_movelt2')
 
     # Archivos
     xacro_file = os.path.join(scara_pkg_path, 'urdf', 'scara.xacro')
