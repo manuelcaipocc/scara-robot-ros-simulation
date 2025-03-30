@@ -1,7 +1,8 @@
 # Ignorar carpetas de build y desarrollo generadas por catkin
 build/
 devel/
-
+latex_files/
+documents/
 # Ignorar archivos temporales y de sistema
 *.swp
 *.bak
