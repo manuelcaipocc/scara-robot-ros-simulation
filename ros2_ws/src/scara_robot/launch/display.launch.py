@@ -18,7 +18,7 @@ def generate_launch_description():
 
     # Archivos
     xacro_file = os.path.join(scara_pkg_path, 'urdf', 'scara.xacro')
-    rviz_config_file = os.path.join(moveit_pkg_path, 'config', 'moveit.rviz')
+    rviz_config_file ="" #os.path.join(moveit_pkg_path, 'config', 'moveit.rviz')
     move_group_launch_file = os.path.join(moveit_pkg_path, 'launch', 'move_group.launch.py')
 
     # Procesa el archivo xacro a URDF
