@@ -47,8 +47,6 @@ This project also includes a complete symbolic and numerical analysis of the rob
 
 ## Author
 
-## Author
-
 Manuel Caipo  
 Msc.Advanced Precision Engineering (APE)  
 Hochschule Furtwangen  
